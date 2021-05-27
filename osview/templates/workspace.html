@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Results for {{ workspace }}</title>
+    <meta name="description" content="Results for {{workspace}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { font-family: Arial, Helvetica, sans-serif; }
+        pre { font-family: monospace; }
+
+        ul { 
+          list-style: none; 
+          margin: 0;
+          padding: 0;
+        }
+
+        li {
+          padding: 0.1em;
+          cursor: pointer;
+        }
+
+        ul ul li {
+          margin-left: 1.6em;
+        }
+
+        #wrapper { 
+          display: grid; 
+          grid-template-columns: 1fr 3fr;
+        }
+
+        .contents {
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+        }
+
+        .contents iframe { 
+          width: 100%;
+        }
+
+        .action.highlight {
+          background: #ceced3;
+        }
+
+        .filelink.highlight {
+          font-weight: bold;
+        }
+
+        .file, .filelist { display: none; }
+        .file.active, .filelist.active { display: block; }
+
+    </style>
+  </head>
+  <body>
+    <header class="row">
+      <h1>Workspace {{ workspace }}</h1>
+      <h2>Repository {{ repo }}</h2>
+      <h3>Generated on {{ current_time }}</h3>
+    </header>
+
+    <div id="wrapper">
+      <ul id="navigation column">
+        {% for name, action in actions.items() %}
+        <li>
+          <div data-show="{{ name }}-filelist" data-highlight=".action" class="action">
+            <span class="state {{ action.state }}">{{ "✅" if action.state == "succeeded" else "❌" }}</span>
+            <span class="action">{{ name }}</span>
+            <span class="count">({{ action.files|length }})</span>
+          </div>
+          <ul id="{{ name }}-filelist" class="filelist">
+            {% for filename, file in action['files'].items() %}
+            <li data-show="{{ filename }}" data-hide=".file" data-highlight=".filelink" class="filelink {{file.privacy_level}}">{{ filename }}</li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="column content">
+        {% for name, action in actions.items() %}
+        {% for filename, file in action.files.items() %}
+        <section id="{{ filename }}" class="{{ file.type }} file">
+          <div class="summary">
+            <table>
+              <tr><th>Name</th><td>{{ filename }}</td></tr>
+              <tr><th>Size</th><td>{{ file.path.stat().st_size }}</td></tr>
+              <tr><th>Privacy</th><td>{{ file.privacy_level }}</td></tr>
+              <tr><th>Action</th><td>{{ name }}</td></tr>
+            </table>
+          </div>
+          <div class="contents">
+            {% if file.html %}
+            {% if file.truncated %}
+            <p>This CSV is very large, and this preview has been truncated.</p>
+            {% endif %}
+            <div data-load="{{ file.html }}"/>
+            {% elif file.type in ("jpeg", "png", "svg") %}
+            <img data-load="{{ filename }}"/>
+            {% elif file.type in ("log", "txt") %}
+            <pre data-load="{{ filename }}"/>
+            {% elif file.type in ("html") %}
+            <iframe data-load="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
+            {% else %}
+            <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
+            {% endif %}
+          </div>
+        </section>
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+    </div>
+    <script type="text/javascript">
+      // stupid simple show/hide links
+      for (const trigger of document.querySelectorAll("[data-show]")) {
+        const to_show = document.getElementById(trigger.dataset.show);
+        const to_hide = Array.from(document.querySelectorAll(trigger.dataset.hide));
+        const to_unlight = Array.from(document.querySelectorAll(trigger.dataset.highlight));
+        const to_load = Array.from(to_show.querySelectorAll("[data-load]"));
+
+        trigger.onclick = (e) => {     
+          to_load.forEach(l => load(l))
+
+          if (to_hide.length > 0) {
+            // hide all others, then show current
+            to_hide.forEach(h => h.classList.remove("active"));
+            to_show.classList.add('active');
+          } else {
+            // just show it, don't hide anything else
+            to_show.classList.toggle('active');
+          }
+          if (to_unlight.length > 0) {
+            to_unlight.forEach(u => u.classList.remove("highlight"));
+          }
+          trigger.classList.add("highlight");
+          e.stopPropagation();
+        }
+      }
+
+      function load(elem) {
+        if (elem.dataset.loaded) return;
+
+        if (elem.src !== undefined) {
+          // <img> or <iframe>
+          elem.src = elem.dataset.load;
+          return
+        }
+
+        // text, log, or html
+        fetch(elem.dataset.load, {mode: "no-cors"})
+          .then(response => response.text())
+          .then(text => {
+            elem.innerHTML = text;
+            elem.dataset.loaded = true;
+          });
+      }
+
+      Array.from(document.querySelectorAll("iframe")).forEach(iframe => {
+        iframe.onload = function() {
+          console.log(iframe.contentDocument.body.scrollHeight);
+          console.log(iframe.contentDocument.body.scrollWidth);
+          iframe.style.height = iframe.contentDocument.body.scrollHeight + "px";
+          iframe.style.width = iframe.contentDocument.body.scrollWidth + "px";
+        };
+      })
+
+    </script>
+  </body>
+</html>

@@ -5,15 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Results for {{ workspace }}</title>
     <meta name="description" content="Results for {{workspace}}">
-  <script type="module">
-//assets/index.bc100889.js
-for(const o of document.querySelectorAll("[data-show]")){const e=document.getElementById(o.dataset.show),l=Array.from(document.querySelectorAll(o.dataset.hide)),c=Array.from(document.querySelectorAll(o.dataset.highlight)),a=Array.from(e.querySelectorAll("[data-load]"));o.onclick=r=>{a.forEach((o=>t(o))),l.length>0?(l.forEach((t=>t.classList.remove("active"))),e.classList.add("active")):e.classList.toggle("active"),c.length>0&&c.forEach((t=>t.classList.remove("highlight"))),o.classList.add("highlight"),r.stopPropagation()}}function t(t){t.dataset.loaded||(void 0===t.src?fetch(t.dataset.load,{mode:"no-cors"}).then((t=>t.text())).then((o=>{t.innerHTML=o,t.dataset.loaded=!0})):t.src=t.dataset.load)}Array.from(document.querySelectorAll("iframe")).forEach((t=>{t.onload=function(){console.log(t.contentDocument.body.scrollHeight),console.log(t.contentDocument.body.scrollWidth),t.style.height=t.contentDocument.body.scrollHeight+"px",t.style.width=t.contentDocument.body.scrollWidth+"px"}}));
-
-</script>
-<!-- assets/style.3c1ab236.css --><style type="text/css">
-*{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif}pre{font-family:monospace}ul{list-style:none;margin:0;padding:0}li{padding:.1em;cursor:pointer}ul ul li{margin-left:1.6em}#wrapper{display:grid;grid-template-columns:1fr 3fr}.contents{width:100%;height:100%;overflow:auto}.contents iframe{width:100%}.action.highlight{background:#ceced3}.filelink.highlight{font-weight:700}.file,.filelist{display:none}.file.active,.filelist.active{display:block}
-</style>
-</head>
+  </head>
   <body>
     <header class="row">
       <h1>Workspace {{ workspace }}</h1>
@@ -73,6 +65,6 @@ for(const o of document.querySelectorAll("[data-show]")){const e=document.getEle
       </div>
 
     </div>
-    
+    <script type="module" src="/main.js"></script>
   </body>
 </html>

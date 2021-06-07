@@ -52,13 +52,21 @@ def merge_files(manifest, workspace):
     for name, data in manifest["files"].items():
         created_by_action = data["created_by_action"]
         path = workspace / name
+
         data["path"] = path
         data["type"] = path.suffixes[0].lstrip(".")
+        if path.exists():
+            data["exists"] = True
+            data["filesize"] = path.stat().st_size
 
-        if data["type"] == "csv":
-            html, truncated = csv_to_html(path, Path(name))
-            data["html"] = html
-            data["truncated"] = truncated
+            # build preview
+            if data["type"] == "csv":
+                html, truncated = csv_to_html(path, Path(name))
+                data["html"] = html
+                data["truncated"] = truncated
+        else:
+            data["exists"] = False
+            data["filesize"] = 0
 
         actions[created_by_action]["files"][name] = data
 

@@ -43,11 +43,21 @@ def csv_to_html(path, urlpath):
     return html_urlpath, truncated
 
 
-def merge_files(manifest, workspace):
+def parse_files(manifest, workspace):
     # merge file list into specific actions
     actions = manifest["actions"]
-    for action in actions.values():
-        action["files"] = {}
+    for action_name, action in actions.items():
+        action_log = f"metadata/{action_name}.log"
+        log_path = workspace / action_log
+        action["files"] = {
+            action_log: { 
+                "path": action_log,
+                "type": "log",
+                "exists": log_path.exists(),
+                "filesize": log_path.stat().st_size if log_path.exists() else 0,
+                "classes": ["action_log", "log"],
+            }
+        }
 
     for name, data in manifest["files"].items():
         created_by_action = data["created_by_action"]
@@ -55,6 +65,8 @@ def merge_files(manifest, workspace):
 
         data["path"] = path
         data["type"] = path.suffixes[0].lstrip(".")
+        data["classes"] = [data["type"]]
+
         if path.exists():
             data["exists"] = True
             data["filesize"] = path.stat().st_size
@@ -67,6 +79,7 @@ def merge_files(manifest, workspace):
         else:
             data["exists"] = False
             data["filesize"] = 0
+            data["classes"].append("not-exist")
 
         actions[created_by_action]["files"][name] = data
 
@@ -95,7 +108,7 @@ def main(argv=sys.argv):
     except Exception as exc:
         sys.exit(f"Could not read json from {manifest_path}: {exc}")
 
-    merge_files(manifest, args.workspace)
+    parse_files(manifest, args.workspace)
     html = render(manifest)
 
     html_path = args.workspace / "index.html"

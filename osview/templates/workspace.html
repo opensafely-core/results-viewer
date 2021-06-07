@@ -1,19 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
     <title>Results for {{ workspace }}</title>
     <meta name="description" content="Results for {{workspace}}">
-  <script type="module">
-//assets/index.bc100889.js
-for(const o of document.querySelectorAll("[data-show]")){const e=document.getElementById(o.dataset.show),l=Array.from(document.querySelectorAll(o.dataset.hide)),c=Array.from(document.querySelectorAll(o.dataset.highlight)),a=Array.from(e.querySelectorAll("[data-load]"));o.onclick=r=>{a.forEach((o=>t(o))),l.length>0?(l.forEach((t=>t.classList.remove("active"))),e.classList.add("active")):e.classList.toggle("active"),c.length>0&&c.forEach((t=>t.classList.remove("highlight"))),o.classList.add("highlight"),r.stopPropagation()}}function t(t){t.dataset.loaded||(void 0===t.src?fetch(t.dataset.load,{mode:"no-cors"}).then((t=>t.text())).then((o=>{t.innerHTML=o,t.dataset.loaded=!0})):t.src=t.dataset.load)}Array.from(document.querySelectorAll("iframe")).forEach((t=>{t.onload=function(){console.log(t.contentDocument.body.scrollHeight),console.log(t.contentDocument.body.scrollWidth),t.style.height=t.contentDocument.body.scrollHeight+"px",t.style.width=t.contentDocument.body.scrollWidth+"px"}}));
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { font-family: Arial, Helvetica, sans-serif; }
+        pre { font-family: monospace; }
 
-</script>
-<!-- assets/style.3c1ab236.css --><style type="text/css">
-*{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif}pre{font-family:monospace}ul{list-style:none;margin:0;padding:0}li{padding:.1em;cursor:pointer}ul ul li{margin-left:1.6em}#wrapper{display:grid;grid-template-columns:1fr 3fr}.contents{width:100%;height:100%;overflow:auto}.contents iframe{width:100%}.action.highlight{background:#ceced3}.filelink.highlight{font-weight:700}.file,.filelist{display:none}.file.active,.filelist.active{display:block}
-</style>
-</head>
+        ul { 
+          list-style: none; 
+          margin: 0;
+          padding: 0;
+        }
+
+        li {
+          padding: 0.1em;
+          cursor: pointer;
+        }
+
+        ul ul li {
+          margin-left: 1.6em;
+        }
+
+        #wrapper { 
+          display: grid; 
+          grid-template-columns: 1fr 3fr;
+        }
+
+        .contents {
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+        }
+
+        .contents iframe { 
+          width: 100%;
+        }
+
+        .action.highlight {
+          background: #ceced3;
+        }
+
+        .filelink.highlight {
+          font-weight: bold;
+        }
+
+        .filelink.not-exist { 
+            text-decoration: line-through;
+        }
+
+        .file, .filelist { display: none; }
+        .file.active, .filelist.active { display: block; }
+
+    </style>
+  </head>
   <body>
     <header class="row">
       <h1>Workspace {{ workspace }}</h1>
@@ -32,7 +74,7 @@ for(const o of document.querySelectorAll("[data-show]")){const e=document.getEle
           </div>
           <ul id="{{ name }}-filelist" class="filelist">
             {% for filename, file in action['files'].items() %}
-            <li data-show="{{ filename }}" data-hide=".file" data-highlight=".filelink" class="filelink {{file.privacy_level}}">{{ filename }}</li>
+            <li data-show="{{ filename }}" data-hide=".file" data-highlight=".filelink" class="filelink {{file.privacy_level}} {{ '' if file.exists else 'not-exist' }}">{{ filename }}</li>
             {% endfor %}
           </ul>
         </li>
@@ -42,29 +84,33 @@ for(const o of document.querySelectorAll("[data-show]")){const e=document.getEle
       <div class="column content">
         {% for name, action in actions.items() %}
         {% for filename, file in action.files.items() %}
-        <section id="{{ filename }}" class="{{ file.type }} file">
+        <section id="{{ filename }}" class="{{ file.type }} file {{ '' if file.exists else 'not-exist' }}">
           <div class="summary">
             <table>
               <tr><th>Name</th><td>{{ filename }}</td></tr>
-              <tr><th>Size</th><td>{{ file.path.stat().st_size }}</td></tr>
+              <tr><th>Size</th><td>{{ file.filesize }}</td></tr>
               <tr><th>Privacy</th><td>{{ file.privacy_level }}</td></tr>
               <tr><th>Action</th><td>{{ name }}</td></tr>
             </table>
           </div>
           <div class="contents">
-            {% if file.html %}
-            {% if file.truncated %}
-            <p>This CSV is very large, and this preview has been truncated.</p>
-            {% endif %}
-            <div data-load="{{ file.html }}"/>
-            {% elif file.type in ("jpeg", "png", "svg") %}
-            <img data-load="{{ filename }}"/>
-            {% elif file.type in ("log", "txt") %}
-            <pre data-load="{{ filename }}"/>
-            {% elif file.type in ("html") %}
-            <iframe data-load="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
+            {% if file.exists %}
+                {% if file.html %}
+                    {% if file.truncated %}
+                    <p>This CSV is very large, and this preview has been truncated.</p>
+                    {% endif %}
+                <div data-load="{{ file.html }}"/>
+                {% elif file.type in ("jpeg", "png", "svg") %}
+                <img data-load="{{ filename }}"/>
+                {% elif file.type in ("log", "txt") %}
+                <pre data-load="{{ filename }}"/>
+                {% elif file.type in ("html") %}
+                <iframe data-load="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
+                {% else %}
+                <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
+                {% endif %}
             {% else %}
-            <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
+            <p>This file is not present</p>
             {% endif %}
           </div>
         </section>
@@ -73,6 +119,60 @@ for(const o of document.querySelectorAll("[data-show]")){const e=document.getEle
       </div>
 
     </div>
-    
+    <script type="text/javascript">
+      // stupid simple show/hide links
+      for (const trigger of document.querySelectorAll("[data-show]")) {
+        const to_show = document.getElementById(trigger.dataset.show);
+        const to_hide = Array.from(document.querySelectorAll(trigger.dataset.hide));
+        const to_unlight = Array.from(document.querySelectorAll(trigger.dataset.highlight));
+        const to_load = Array.from(to_show.querySelectorAll("[data-load]"));
+
+        trigger.onclick = (e) => {     
+          to_load.forEach(l => load(l))
+
+          if (to_hide.length > 0) {
+            // hide all others, then show current
+            to_hide.forEach(h => h.classList.remove("active"));
+            to_show.classList.add('active');
+          } else {
+            // just show it, don't hide anything else
+            to_show.classList.toggle('active');
+          }
+          if (to_unlight.length > 0) {
+            to_unlight.forEach(u => u.classList.remove("highlight"));
+          }
+          trigger.classList.add("highlight");
+          e.stopPropagation();
+        }
+      }
+
+      function load(elem) {
+        if (elem.dataset.loaded) return;
+
+        if (elem.src !== undefined) {
+          // <img> or <iframe>
+          elem.src = elem.dataset.load;
+          return
+        }
+
+        // text, log, or html
+        fetch(elem.dataset.load, {mode: "no-cors"})
+          .then(response => response.text())
+          .then(text => {
+            elem.innerHTML = text;
+            elem.dataset.loaded = true;
+          });
+      }
+
+      Array.from(document.querySelectorAll("iframe")).forEach(iframe => {
+        iframe.onload = function() {
+          console.log(iframe.contentDocument.body.scrollHeight);
+          console.log(iframe.contentDocument.body.scrollWidth);
+          iframe.style.height = iframe.contentDocument.body.scrollHeight + "px";
+          iframe.style.width = iframe.contentDocument.body.scrollWidth + "px";
+        };
+      })
+
+    </script>
   </body>
 </html>

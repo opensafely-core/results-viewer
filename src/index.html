@@ -1,70 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Results for {{ workspace }}</title>
-    <meta name="description" content="Results for {{workspace}}">
-  </head>
-  <body>
-    <header class="row">
-      <h1>Workspace {{ workspace }}</h1>
-      <h2>Repository {{ repo }}</h2>
-      <h3>Generated on {{ current_time }}</h3>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results for {{ workspace }}</title>
+  <meta name="description" content="Results for {{ workspace }}">
+</head>
+<body x-data="{ file: '', content: '' }">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+    <div class="px-3 py-4 sm:px-6">
+      <h1 class="text-lg leading-6 font-medium text-gray-900">
+        Workspace:
+        <span class="inline-block font-mono">{{ workspace }}</span>
+      </h1>
+    </div>
+    <div class="border-t border-gray-200 px-3 py-4 sm:px-6">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8">
+        <div>
+          <dt class="text-sm font-bold text-gray-600">Repository</dt>
+          <dd class="mt-1 text-sm text-gray-900 font-mono">{{ repo }}</dd>
+        </div>
+        <div>
+          <dt class="text-sm font-bold text-gray-600">Generated on</dt>
+          <dd class="mt-1 text-sm text-gray-900" data-format="date-time">{{ current_time }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
 
-    <div id="wrapper">
-      <ul id="navigation column">
-        {% for name, action in actions.items() %}
-        <li>
-          <div data-show="{{ name }}-filelist" data-highlight=".action" class="action">
-            <span class="state {{ action.state }}">{{ "✅" if action.state == "succeeded" else "❌" }}</span>
-            <span class="action">{{ name }}</span>
-            <span class="count">({{ action.files|length }})</span>
+  {% for name, action in actions.items() %}
+    {% for filename, file in action.files.items() %}
+      <div x-cloak x-show="file === '{{ filename }}'">
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+          <div class="border-t border-gray-200">
+            <dl>
+              <div class="bg-white px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Name</dt>
+                <dd class="mt-1 text-sm text-gray-900 font-mono whitespace-nowrap overflow-y-auto sm:mt-0 sm:col-span-3">
+                  {{ filename }}
+                </dd>
+              </div>
+              <div class="bg-gray-50 px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Size</dt>
+                <dd class="mt-1 text-sm text-gray-900 overflow-y-auto sm:mt-0 sm:col-span-3" data-format="file-size">
+                  {{ file.filesize }}
+                </dd>
+              </div>
+              <div class="bg-white px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Privacy</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                    {% if file.privacy_level == 'highly_sensitive' %}
+                      bg-red-100 text-red-800
+                    {% elif file.privacy_level == 'moderately_sensitive' %}
+                      bg-yellow-100 text-yellow-800
+                    {% else %}
+                      bg-blue-100 text-blue-800
+                    {% endif %}
+                  ">
+                    {{ file.privacy_level }}
+                  </span>
+                </dd>
+              </div>
+              <div class="bg-gray-50 px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Action</dt>
+                <dd class="mt-1 text-sm text-gray-900 font-mono whitespace-nowrap overflow-y-auto sm:mt-0 sm:col-span-3">
+                  {{ name }}
+                </dd>
+              </div>
+            </dl>
           </div>
-          <ul id="{{ name }}-filelist" class="filelist">
-            {% for filename, file in action['files'].items() %}
-            <li data-show="{{ filename }}" data-hide=".file" data-highlight=".filelink" class="filelink {{file.privacy_level}}">{{ filename }}</li>
-            {% endfor %}
-          </ul>
-        </li>
+        </div>
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+          <div class="px-3 py-4 sm:px-6 min-w-full overflow-x-auto">
+            <section id="{{ filename }}" class="{{ file.type }} file {{ '' if file.exists else 'not-exist' }}">
+            {% if file.exists %}
+              {% if file.html %}
+                {% if file.truncated %}
+                  <p>This CSV is very large, and this preview has been truncated.</p>
+                {% endif %}
+                <div data-load="{{ file.html }}"/>
+              {% elif file.type in ("jpeg", "png", "svg") %}
+                <img src="{{ filename }}"/>
+              {% elif file.type in ("html", "log", "txt") %}
+                <iframe class="min-w-full min-h-screen" width="100%" src="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
+              {% else %}
+                <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
+              {% endif %}
+            {% else %}
+              <p>This file is not present</p>
+            {% endif %}
+          </section>
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+  {% endfor %}
+
+  <ul id="navigation column">
+    {% for name, action in actions.items() %}
+    <li>
+      <div data-show="{{ name }}-filelist" data-highlight=".action" class="action">
+        <span class="state {{ action.state }}">{{ "✅" if action.state == "succeeded" else "❌" }}</span>
+        <span class="action">{{ name }}</span>
+        <span class="count">({{ action.files|length }})</span>
+      </div>
+      <ul id="{{ name }}-filelist" class="filelist">
+        {% for filename, file in action['files'].items() %}
+          <li>
+            <button @click="
+              file = '{{ filename }}';
+
+            ">
+              {{ filename }}
+            </button>
+          </li>
         {% endfor %}
       </ul>
+    </li>
+    {% endfor %}
+  </ul>
 
-      <div class="column content">
-        {% for name, action in actions.items() %}
-        {% for filename, file in action.files.items() %}
-        <section id="{{ filename }}" class="{{ file.type }} file">
-          <div class="summary">
-            <table>
-              <tr><th>Name</th><td>{{ filename }}</td></tr>
-              <tr><th>Size</th><td>{{ file.path.stat().st_size }}</td></tr>
-              <tr><th>Privacy</th><td>{{ file.privacy_level }}</td></tr>
-              <tr><th>Action</th><td>{{ name }}</td></tr>
-            </table>
-          </div>
-          <div class="contents">
-            {% if file.html %}
-            {% if file.truncated %}
-            <p>This CSV is very large, and this preview has been truncated.</p>
-            {% endif %}
-            <div data-load="{{ file.html }}"/>
-            {% elif file.type in ("jpeg", "png", "svg") %}
-            <img data-load="{{ filename }}"/>
-            {% elif file.type in ("log", "txt") %}
-            <pre data-load="{{ filename }}"/>
-            {% elif file.type in ("html") %}
-            <iframe data-load="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
-            {% else %}
-            <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
-            {% endif %}
-          </div>
-        </section>
-        {% endfor %}
-        {% endfor %}
-      </div>
+  <script type="module" src="/main.js"></script>
+</body>
 
-    </div>
-    <script type="module" src="/main.js"></script>
-  </body>
 </html>

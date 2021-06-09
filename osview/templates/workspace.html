@@ -1,178 +1,139 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Results for {{ workspace }}</title>
-    <meta name="description" content="Results for {{workspace}}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * { font-family: Arial, Helvetica, sans-serif; }
-        pre { font-family: monospace; }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results for {{ workspace }}</title>
+  <meta name="description" content="Results for {{ workspace }}">
+<script type="module">
+//assets/index.86d68803.js
+"undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self&&self;!function(){function e(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function t(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(e);t&&(i=i.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),n.push.apply(n,i)}return n}function n(n){for(var i=1;i<arguments.length;i++){var r=null!=arguments[i]?arguments[i]:{};i%2?t(Object(r),!0).forEach((function(t){e(n,t,r[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(n,Object.getOwnPropertyDescriptors(r)):t(Object(r)).forEach((function(e){Object.defineProperty(n,e,Object.getOwnPropertyDescriptor(r,e))}))}return n}function i(){return new Promise((e=>{"loading"==document.readyState?document.addEventListener("DOMContentLoaded",e):e()}))}function r(e){return Array.from(new Set(e))}function s(){return navigator.userAgent.includes("Node.js")||navigator.userAgent.includes("jsdom")}function o(e,t){return e==t}function a(e,t){"template"!==e.tagName.toLowerCase()?console.warn(`Alpine: [${t}] directive should only be added to <template> tags. See https://github.com/alpinejs/alpine#${t}`):1!==e.content.childElementCount&&console.warn(`Alpine: <template> tag with [${t}] encountered with an unexpected number of root elements. Make sure <template> has a single root element. `)}function l(e){return e.replace(/([a-z])([A-Z])/g,"$1-$2").replace(/[_\s]/,"-").toLowerCase()}function c(e){return e.toLowerCase().replace(/-(\w)/g,((e,t)=>t.toUpperCase()))}function u(e,t){if(!1===t(e))return;let n=e.firstElementChild;for(;n;)u(n,t),n=n.nextElementSibling}function d(e,t){var n;return function(){var i=this,r=arguments,s=function(){n=null,e.apply(i,r)};clearTimeout(n),n=setTimeout(s,t)}}const f=(e,t,n)=>{if(console.warn(`Alpine Error: "${n}"\n\nExpression: "${t}"\nElement:`,e),!s())throw Object.assign(n,{el:e,expression:t}),n};function m(e,{el:t,expression:n}){try{const i=e();return i instanceof Promise?i.catch((e=>f(t,n,e))):i}catch(i){f(t,n,i)}}function p(e,t,n,i={}){return m((()=>"function"==typeof t?t.call(n):new Function(["$data",...Object.keys(i)],`var __alpine_result; with($data) { __alpine_result = ${t} }; return __alpine_result`)(n,...Object.values(i))),{el:e,expression:t})}function h(e,t,n,i={}){return m((()=>{if("function"==typeof t)return Promise.resolve(t.call(n,i.$event));let e=Function;if(e=Object.getPrototypeOf((async function(){})).constructor,Object.keys(n).includes(t)){let e=new Function(["dataContext",...Object.keys(i)],`with(dataContext) { return ${t} }`)(n,...Object.values(i));return"function"==typeof e?Promise.resolve(e.call(n,i.$event)):Promise.resolve()}return Promise.resolve(new e(["dataContext",...Object.keys(i)],`with(dataContext) { ${t} }`)(n,...Object.values(i)))}),{el:e,expression:t})}const v=/^x-(on|bind|data|text|html|model|if|for|show|cloak|transition|ref|spread)\b/;function b(e){const t=w(e.name);return v.test(t)}function y(e,t,n){let i=Array.from(e.attributes).filter(b).map(x),r=i.filter((e=>"spread"===e.type))[0];if(r){let n=p(e,r.expression,t.$data);i=i.concat(Object.entries(n).map((([e,t])=>x({name:e,value:t}))))}return n?i.filter((e=>e.type===n)):g(i)}function g(e){let t=["bind","model","show","catch-all"];return e.sort(((e,n)=>{let i=-1===t.indexOf(e.type)?"catch-all":e.type,r=-1===t.indexOf(n.type)?"catch-all":n.type;return t.indexOf(i)-t.indexOf(r)}))}function x({name:e,value:t}){const n=w(e),i=n.match(v),r=n.match(/:([a-zA-Z0-9\-:]+)/),s=n.match(/\.[^.\]]+(?=[^\]]*$)/g)||[];return{type:i?i[1]:null,value:r?r[1]:null,modifiers:s.map((e=>e.replace(".",""))),expression:t}}function _(e){return["disabled","checked","required","readonly","hidden","open","selected","autofocus","itemscope","multiple","novalidate","allowfullscreen","allowpaymentrequest","formnovalidate","autoplay","controls","loop","muted","playsinline","default","ismap","reversed","async","defer","nomodule"].includes(e)}function w(e){return e.startsWith("@")?e.replace("@","x-on:"):e.startsWith(":")?e.replace(":","x-bind:"):e}function E(e,t=Boolean){return e.split(" ").filter(t)}const O="in",k="out",S="cancelled";function A(e,t,n,i,r=!1){if(r)return t();if(e.__x_transition&&e.__x_transition.type===O)return;const s=y(e,i,"transition"),o=y(e,i,"show")[0];if(o&&o.modifiers.includes("transition")){let i=o.modifiers;if(i.includes("out")&&!i.includes("in"))return t();const r=i.includes("in")&&i.includes("out");i=r?i.filter(((e,t)=>t<i.indexOf("out"))):i,P(e,i,t,n)}else s.some((e=>["enter","enter-start","enter-end"].includes(e.value)))?L(e,i,s,t,n):t()}function $(e,t,n,i,r=!1){if(r)return t();if(e.__x_transition&&e.__x_transition.type===k)return;const s=y(e,i,"transition"),o=y(e,i,"show")[0];if(o&&o.modifiers.includes("transition")){let i=o.modifiers;if(i.includes("in")&&!i.includes("out"))return t();const r=i.includes("in")&&i.includes("out");i=r?i.filter(((e,t)=>t>i.indexOf("out"))):i,D(e,i,r,t,n)}else s.some((e=>["leave","leave-start","leave-end"].includes(e.value)))?N(e,i,s,t,n):t()}function P(e,t,n,i){j(e,t,n,(()=>{}),i,{duration:C(t,"duration",150),origin:C(t,"origin","center"),first:{opacity:0,scale:C(t,"scale",95)},second:{opacity:1,scale:100}},O)}function D(e,t,n,i,r){j(e,t,(()=>{}),i,r,{duration:n?C(t,"duration",150):C(t,"duration",150)/2,origin:C(t,"origin","center"),first:{opacity:1,scale:100},second:{opacity:0,scale:C(t,"scale",95)}},k)}function C(e,t,n){if(-1===e.indexOf(t))return n;const i=e[e.indexOf(t)+1];if(!i)return n;if("scale"===t&&!F(i))return n;if("duration"===t){let e=i.match(/([0-9]+)ms/);if(e)return e[1]}return"origin"===t&&["top","right","left","center","bottom"].includes(e[e.indexOf(t)+2])?[i,e[e.indexOf(t)+2]].join(" "):i}function j(e,t,n,i,r,s,o){e.__x_transition&&e.__x_transition.cancel&&e.__x_transition.cancel();const a=e.style.opacity,l=e.style.transform,c=e.style.transformOrigin,u=!t.includes("opacity")&&!t.includes("scale"),d=u||t.includes("opacity"),f=u||t.includes("scale"),m={start(){d&&(e.style.opacity=s.first.opacity),f&&(e.style.transform=`scale(${s.first.scale/100})`)},during(){f&&(e.style.transformOrigin=s.origin),e.style.transitionProperty=[d?"opacity":"",f?"transform":""].join(" ").trim(),e.style.transitionDuration=s.duration/1e3+"s",e.style.transitionTimingFunction="cubic-bezier(0.4, 0.0, 0.2, 1)"},show(){n()},end(){d&&(e.style.opacity=s.second.opacity),f&&(e.style.transform=`scale(${s.second.scale/100})`)},hide(){i()},cleanup(){d&&(e.style.opacity=a),f&&(e.style.transform=l),f&&(e.style.transformOrigin=c),e.style.transitionProperty=null,e.style.transitionDuration=null,e.style.transitionTimingFunction=null}};z(e,m,o,r)}const T=(e,t,n)=>"function"==typeof e?n.evaluateReturnExpression(t,e):e;function L(e,t,n,i,r){B(e,E(T((n.find((e=>"enter"===e.value))||{expression:""}).expression,e,t)),E(T((n.find((e=>"enter-start"===e.value))||{expression:""}).expression,e,t)),E(T((n.find((e=>"enter-end"===e.value))||{expression:""}).expression,e,t)),i,(()=>{}),O,r)}function N(e,t,n,i,r){B(e,E(T((n.find((e=>"leave"===e.value))||{expression:""}).expression,e,t)),E(T((n.find((e=>"leave-start"===e.value))||{expression:""}).expression,e,t)),E(T((n.find((e=>"leave-end"===e.value))||{expression:""}).expression,e,t)),(()=>{}),i,k,r)}function B(e,t,n,i,r,s,o,a){e.__x_transition&&e.__x_transition.cancel&&e.__x_transition.cancel();const l=e.__x_original_classes||[],c={start(){e.classList.add(...n)},during(){e.classList.add(...t)},show(){r()},end(){e.classList.remove(...n.filter((e=>!l.includes(e)))),e.classList.add(...i)},hide(){s()},cleanup(){e.classList.remove(...t.filter((e=>!l.includes(e)))),e.classList.remove(...i.filter((e=>!l.includes(e))))}};z(e,c,o,a)}function z(e,t,n,i){const r=R((()=>{t.hide(),e.isConnected&&t.cleanup(),delete e.__x_transition}));e.__x_transition={type:n,cancel:R((()=>{i(S),r()})),finish:r,nextFrame:null},t.start(),t.during(),e.__x_transition.nextFrame=requestAnimationFrame((()=>{let n=1e3*Number(getComputedStyle(e).transitionDuration.replace(/,.*/,"").replace("s",""));0===n&&(n=1e3*Number(getComputedStyle(e).animationDuration.replace("s",""))),t.show(),e.__x_transition.nextFrame=requestAnimationFrame((()=>{t.end(),setTimeout(e.__x_transition.finish,n)}))}))}function F(e){return!Array.isArray(e)&&!isNaN(e)}function R(e){let t=!1;return function(){t||(t=!0,e.apply(this,arguments))}}function M(e,t,n,i,r){a(t,"x-for");let s=I("function"==typeof n?e.evaluateReturnExpression(t,n):n),o=G(e,t,s,r),l=t;o.forEach(((n,a)=>{let c=q(s,n,a,o,r()),u=U(e,t,a,c),d=W(l.nextElementSibling,u);d?(delete d.__x_for_key,d.__x_for=c,e.updateElements(d,(()=>d.__x_for))):(d=Z(t,l),A(d,(()=>{}),(()=>{}),e,i),d.__x_for=c,e.initializeElements(d,(()=>d.__x_for))),l=d,l.__x_for_key=u})),Y(l,e)}function I(e){let t=/,([^,\}\]]*)(?:,([^,\}\]]*))?$/,n=/^\(|\)$/g,i=/([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/,r=String(e).match(i);if(!r)return;let s={};s.items=r[2].trim();let o=r[1].trim().replace(n,""),a=o.match(t);return a?(s.item=o.replace(t,"").trim(),s.index=a[1].trim(),a[2]&&(s.collection=a[2].trim())):s.item=o,s}function q(e,t,i,r,s){let o=s?n({},s):{};return o[e.item]=t,e.index&&(o[e.index]=i),e.collection&&(o[e.collection]=r),o}function U(e,t,n,i){let r=y(t,e,"bind").filter((e=>"key"===e.value))[0];return r?e.evaluateReturnExpression(t,r.expression,(()=>i)):n}function G(e,t,n,i){let r=y(t,e,"if")[0];if(r&&!e.evaluateReturnExpression(t,r.expression))return[];let s=e.evaluateReturnExpression(t,n.items,i);return F(s)&&s>=0&&(s=Array.from(Array(s).keys(),(e=>e+1))),s}function Z(e,t){let n=document.importNode(e.content,!0);return t.parentElement.insertBefore(n,t.nextElementSibling),t.nextElementSibling}function W(e,t){if(!e)return;if(void 0===e.__x_for_key)return;if(e.__x_for_key===t)return e;let n=e;for(;n;){if(n.__x_for_key===t)return n.parentElement.insertBefore(n,e);n=!(!n.nextElementSibling||void 0===n.nextElementSibling.__x_for_key)&&n.nextElementSibling}}function Y(e,t){for(var n=!(!e.nextElementSibling||void 0===e.nextElementSibling.__x_for_key)&&e.nextElementSibling;n;){let e=n,i=n.nextElementSibling;$(n,(()=>{e.remove()}),(()=>{}),t),n=!(!i||void 0===i.__x_for_key)&&i}}function K(e,t,n,i,s,a,l){var u=e.evaluateReturnExpression(t,i,s);if("value"===n){if(We.ignoreFocusedForValueBinding&&document.activeElement.isSameNode(t))return;if(void 0===u&&String(i).match(/\./)&&(u=""),"radio"===t.type)void 0===t.attributes.value&&"bind"===a?t.value=u:"bind"!==a&&(t.checked=o(t.value,u));else if("checkbox"===t.type)"boolean"==typeof u||[null,void 0].includes(u)||"bind"!==a?"bind"!==a&&(Array.isArray(u)?t.checked=u.some((e=>o(e,t.value))):t.checked=!!u):t.value=String(u);else if("SELECT"===t.tagName)V(t,u);else{if(t.value===u)return;t.value=u}}else if("class"===n)if(Array.isArray(u)){const e=t.__x_original_classes||[];t.setAttribute("class",r(e.concat(u)).join(" "))}else if("object"==typeof u)Object.keys(u).sort(((e,t)=>u[e]-u[t])).forEach((e=>{u[e]?E(e).forEach((e=>t.classList.add(e))):E(e).forEach((e=>t.classList.remove(e)))}));else{const e=t.__x_original_classes||[],n=u?E(u):[];t.setAttribute("class",r(e.concat(n)).join(" "))}else n=l.includes("camel")?c(n):n,[null,void 0,!1].includes(u)?t.removeAttribute(n):_(n)?H(t,n,n):H(t,n,u)}function H(e,t,n){e.getAttribute(t)!=n&&e.setAttribute(t,n)}function V(e,t){const n=[].concat(t).map((e=>e+""));Array.from(e.options).forEach((e=>{e.selected=n.includes(e.value||e.text)}))}function J(e,t,n){void 0===t&&String(n).match(/\./)&&(t=""),e.textContent=t}function Q(e,t,n,i){t.innerHTML=e.evaluateReturnExpression(t,n,i)}function X(e,t,n,i,r=!1){const s=()=>{t.style.display="none",t.__x_is_shown=!1},o=()=>{1===t.style.length&&"none"===t.style.display?t.removeAttribute("style"):t.style.removeProperty("display"),t.__x_is_shown=!0};if(!0===r)return void(n?o():s());const a=(i,r)=>{n?(("none"===t.style.display||t.__x_transition)&&A(t,(()=>{o()}),r,e),i((()=>{}))):"none"!==t.style.display?$(t,(()=>{i((()=>{s()}))}),r,e):i((()=>{}))};i.includes("immediate")?a((e=>e()),(()=>{})):(e.showDirectiveLastElement&&!e.showDirectiveLastElement.contains(t)&&e.executeAndClearRemainingShowDirectiveStack(),e.showDirectiveStack.push(a),e.showDirectiveLastElement=t)}function ee(e,t,n,i,r){a(t,"x-if");const s=t.nextElementSibling&&!0===t.nextElementSibling.__x_inserted_me;if(!n||s&&!t.__x_transition)!n&&s&&$(t.nextElementSibling,(()=>{t.nextElementSibling.remove()}),(()=>{}),e,i);else{const n=document.importNode(t.content,!0);t.parentElement.insertBefore(n,t.nextElementSibling),A(t.nextElementSibling,(()=>{}),(()=>{}),e,i),e.initializeElements(t.nextElementSibling,r),t.nextElementSibling.__x_inserted_me=!0}}function te(e,t,n,i,r,s={}){const o={passive:i.includes("passive")};let a,l;if(i.includes("camel")&&(n=c(n)),i.includes("away")?(l=document,a=l=>{t.contains(l.target)||t.offsetWidth<1&&t.offsetHeight<1||(ne(e,r,l,s),i.includes("once")&&document.removeEventListener(n,a,o))}):(l=i.includes("window")?window:i.includes("document")?document:t,a=c=>{l!==window&&l!==document||document.body.contains(t)?ie(n)&&re(c,i)||(i.includes("prevent")&&c.preventDefault(),i.includes("stop")&&c.stopPropagation(),i.includes("self")&&c.target!==t)||ne(e,r,c,s).then((e=>{!1===e?c.preventDefault():i.includes("once")&&l.removeEventListener(n,a,o)})):l.removeEventListener(n,a,o)}),i.includes("debounce")){let e=i[i.indexOf("debounce")+1]||"invalid-wait",t=F(e.split("ms")[0])?Number(e.split("ms")[0]):250;a=d(a,t)}l.addEventListener(n,a,o)}function ne(e,t,i,r){return e.evaluateCommandExpression(i.target,t,(()=>n(n({},r()),{},{$event:i})))}function ie(e){return["keydown","keyup"].includes(e)}function re(e,t){let n=t.filter((e=>!["window","document","prevent","stop"].includes(e)));if(n.includes("debounce")){let e=n.indexOf("debounce");n.splice(e,F((n[e+1]||"invalid-wait").split("ms")[0])?2:1)}if(0===n.length)return!1;if(1===n.length&&n[0]===se(e.key))return!1;const i=["ctrl","shift","alt","meta","cmd","super"].filter((e=>n.includes(e)));return n=n.filter((e=>!i.includes(e))),!(i.length>0&&i.filter((t=>("cmd"!==t&&"super"!==t||(t="meta"),e[`${t}Key`]))).length===i.length&&n[0]===se(e.key))}function se(e){switch(e){case"/":return"slash";case" ":case"Spacebar":return"space";default:return e&&l(e)}}function oe(e,t,i,r,s){var o="select"===t.tagName.toLowerCase()||["checkbox","radio"].includes(t.type)||i.includes("lazy")?"change":"input";te(e,t,o,i,`${r} = rightSideOfExpression($event, ${r})`,(()=>n(n({},s()),{},{rightSideOfExpression:ae(t,i,r)})))}function ae(e,t,n){return"radio"===e.type&&(e.hasAttribute("name")||e.setAttribute("name",n)),(n,i)=>{if(n instanceof CustomEvent&&n.detail)return n.detail;if("checkbox"===e.type){if(Array.isArray(i)){const e=t.includes("number")?le(n.target.value):n.target.value;return n.target.checked?i.concat([e]):i.filter((t=>!o(t,e)))}return n.target.checked}if("select"===e.tagName.toLowerCase()&&e.multiple)return t.includes("number")?Array.from(n.target.selectedOptions).map((e=>le(e.value||e.text))):Array.from(n.target.selectedOptions).map((e=>e.value||e.text));{const e=n.target.value;return t.includes("number")?le(e):t.includes("trim")?e.trim():e}}}function le(e){const t=e?parseFloat(e):null;return F(t)?t:e}const{isArray:ce}=Array,{getPrototypeOf:ue,create:de,defineProperty:fe,defineProperties:me,isExtensible:pe,getOwnPropertyDescriptor:he,getOwnPropertyNames:ve,getOwnPropertySymbols:be,preventExtensions:ye,hasOwnProperty:ge}=Object,{push:xe,concat:_e,map:we}=Array.prototype;function Ee(e){return void 0===e}function Oe(e){return"function"==typeof e}function ke(e){return"object"==typeof e}const Se=new WeakMap;function Ae(e,t){Se.set(e,t)}const $e=e=>Se.get(e)||e;function Pe(e,t){return e.valueIsObservable(t)?e.getProxy(t):t}function De(e){return ge.call(e,"value")&&(e.value=$e(e.value)),e}function Ce(e,t,n){_e.call(ve(n),be(n)).forEach((i=>{let r=he(n,i);r.configurable||(r=Ie(e,r,Pe)),fe(t,i,r)})),ye(t)}class je{constructor(e,t){this.originalTarget=t,this.membrane=e}get(e,t){const{originalTarget:n,membrane:i}=this,r=n[t],{valueObserved:s}=i;return s(n,t),i.getProxy(r)}set(e,t,n){const{originalTarget:i,membrane:{valueMutated:r}}=this;return i[t]!==n?(i[t]=n,r(i,t)):"length"===t&&ce(i)&&r(i,t),!0}deleteProperty(e,t){const{originalTarget:n,membrane:{valueMutated:i}}=this;return delete n[t],i(n,t),!0}apply(e,t,n){}construct(e,t,n){}has(e,t){const{originalTarget:n,membrane:{valueObserved:i}}=this;return i(n,t),t in n}ownKeys(e){const{originalTarget:t}=this;return _e.call(ve(t),be(t))}isExtensible(e){const t=pe(e);if(!t)return t;const{originalTarget:n,membrane:i}=this,r=pe(n);return r||Ce(i,e,n),r}setPrototypeOf(e,t){}getPrototypeOf(e){const{originalTarget:t}=this;return ue(t)}getOwnPropertyDescriptor(e,t){const{originalTarget:n,membrane:i}=this,{valueObserved:r}=this.membrane;r(n,t);let s=he(n,t);if(Ee(s))return s;const o=he(e,t);return Ee(o)?(s=Ie(i,s,Pe),s.configurable||fe(e,t,s),s):o}preventExtensions(e){const{originalTarget:t,membrane:n}=this;return Ce(n,e,t),ye(t),!0}defineProperty(e,t,n){const{originalTarget:i,membrane:r}=this,{valueMutated:s}=r,{configurable:o}=n;if(ge.call(n,"writable")&&!ge.call(n,"value")){const e=he(i,t);n.value=e.value}return fe(i,t,De(n)),!1===o&&fe(e,t,Ie(r,n,Pe)),s(i,t),!0}}function Te(e,t){return e.valueIsObservable(t)?e.getReadOnlyProxy(t):t}class Le{constructor(e,t){this.originalTarget=t,this.membrane=e}get(e,t){const{membrane:n,originalTarget:i}=this,r=i[t],{valueObserved:s}=n;return s(i,t),n.getReadOnlyProxy(r)}set(e,t,n){return!1}deleteProperty(e,t){return!1}apply(e,t,n){}construct(e,t,n){}has(e,t){const{originalTarget:n,membrane:{valueObserved:i}}=this;return i(n,t),t in n}ownKeys(e){const{originalTarget:t}=this;return _e.call(ve(t),be(t))}setPrototypeOf(e,t){}getOwnPropertyDescriptor(e,t){const{originalTarget:n,membrane:i}=this,{valueObserved:r}=i;r(n,t);let s=he(n,t);if(Ee(s))return s;const o=he(e,t);return Ee(o)?(s=Ie(i,s,Te),ge.call(s,"set")&&(s.set=void 0),s.configurable||fe(e,t,s),s):o}preventExtensions(e){return!1}defineProperty(e,t,n){return!1}}function Ne(e){let t;return ce(e)?t=[]:ke(e)&&(t={}),t}const Be=Object.prototype;function ze(e){if(null===e)return!1;if("object"!=typeof e)return!1;if(ce(e))return!0;const t=ue(e);return t===Be||null===t||null===ue(t)}const Fe=(e,t)=>{},Re=(e,t)=>{},Me=e=>e;function Ie(e,t,n){const{set:i,get:r}=t;return ge.call(t,"value")?t.value=n(e,t.value):(Ee(r)||(t.get=function(){return n(e,r.call($e(this)))}),Ee(i)||(t.set=function(t){i.call($e(this),e.unwrapProxy(t))})),t}class qe{constructor(e){if(this.valueDistortion=Me,this.valueMutated=Re,this.valueObserved=Fe,this.valueIsObservable=ze,this.objectGraph=new WeakMap,!Ee(e)){const{valueDistortion:t,valueMutated:n,valueObserved:i,valueIsObservable:r}=e;this.valueDistortion=Oe(t)?t:Me,this.valueMutated=Oe(n)?n:Re,this.valueObserved=Oe(i)?i:Fe,this.valueIsObservable=Oe(r)?r:ze}}getProxy(e){const t=$e(e),n=this.valueDistortion(t);if(this.valueIsObservable(n)){const i=this.getReactiveState(t,n);return i.readOnly===e?e:i.reactive}return n}getReadOnlyProxy(e){e=$e(e);const t=this.valueDistortion(e);return this.valueIsObservable(t)?this.getReactiveState(e,t).readOnly:t}unwrapProxy(e){return $e(e)}getReactiveState(e,t){const{objectGraph:n}=this;let i=n.get(t);if(i)return i;const r=this;return i={get reactive(){const n=new je(r,t),i=new Proxy(Ne(t),n);return Ae(i,e),fe(this,"reactive",{value:i}),i},get readOnly(){const n=new Le(r,t),i=new Proxy(Ne(t),n);return Ae(i,e),fe(this,"readOnly",{value:i}),i}},n.set(t,i),i}}function Ue(e,t){let n=new qe({valueMutated(e,n){t(e,n)}});return{data:n.getProxy(e),membrane:n}}function Ge(e,t){let n=e.unwrapProxy(t),i={};return Object.keys(n).forEach((e=>{["$el","$refs","$nextTick","$watch"].includes(e)||(i[e]=n[e])})),i}class Ze{constructor(e,t=null){this.$el=e;const n=this.$el.getAttribute("x-data"),i=""===n?"{}":n,r=this.$el.getAttribute("x-init");let s={$el:this.$el},o=t?t.$el:this.$el;Object.entries(We.magicProperties).forEach((([e,t])=>{Object.defineProperty(s,`$${e}`,{get:function(){return t(o)}})})),this.unobservedData=t?t.getUnobservedData():p(e,i,s);let{membrane:a,data:l}=this.wrapDataInObservable(this.unobservedData);var c;this.$data=l,this.membrane=a,this.unobservedData.$el=this.$el,this.unobservedData.$refs=this.getRefsProxy(),this.nextTickStack=[],this.unobservedData.$nextTick=e=>{this.nextTickStack.push(e)},this.watchers={},this.unobservedData.$watch=(e,t)=>{this.watchers[e]||(this.watchers[e]=[]),this.watchers[e].push(t)},Object.entries(We.magicProperties).forEach((([e,t])=>{Object.defineProperty(this.unobservedData,`$${e}`,{get:function(){return t(o,this.$el)}})})),this.showDirectiveStack=[],this.showDirectiveLastElement,t||We.onBeforeComponentInitializeds.forEach((e=>e(this))),r&&!t&&(this.pauseReactivity=!0,c=this.evaluateReturnExpression(this.$el,r),this.pauseReactivity=!1),this.initializeElements(this.$el,(()=>{}),t),this.listenForNewElementsToInitialize(),"function"==typeof c&&c.call(this.$data),t||setTimeout((()=>{We.onComponentInitializeds.forEach((e=>e(this)))}),0)}getUnobservedData(){return Ge(this.membrane,this.$data)}wrapDataInObservable(e){var t=this;let n=d((function(){t.updateElements(t.$el)}),0);return Ue(e,((e,i)=>{t.watchers[i]?t.watchers[i].forEach((t=>t(e[i]))):Array.isArray(e)?Object.keys(t.watchers).forEach((n=>{let r=n.split(".");"length"!==i&&r.reduce(((i,r)=>(Object.is(e,i[r])&&t.watchers[n].forEach((t=>t(e))),i[r])),t.unobservedData)})):Object.keys(t.watchers).filter((e=>e.includes("."))).forEach((n=>{let r=n.split(".");i===r[r.length-1]&&r.reduce(((r,s)=>(Object.is(e,r)&&t.watchers[n].forEach((t=>t(e[i]))),r[s])),t.unobservedData)})),t.pauseReactivity||n()}))}walkAndSkipNestedComponents(e,t,n=(()=>{})){u(e,(e=>e.hasAttribute("x-data")&&!e.isSameNode(this.$el)?(e.__x||n(e),!1):t(e)))}initializeElements(e,t=(()=>{}),n=!1){this.walkAndSkipNestedComponents(e,(e=>void 0===e.__x_for_key&&void 0===e.__x_inserted_me&&void this.initializeElement(e,t,!n)),(e=>{n||(e.__x=new Ze(e))})),this.executeAndClearRemainingShowDirectiveStack(),this.executeAndClearNextTickStack(e)}initializeElement(e,t,n=!0){e.hasAttribute("class")&&y(e,this).length>0&&(e.__x_original_classes=E(e.getAttribute("class"))),n&&this.registerListeners(e,t),this.resolveBoundAttributes(e,!0,t)}updateElements(e,t=(()=>{})){this.walkAndSkipNestedComponents(e,(e=>{if(void 0!==e.__x_for_key&&!e.isSameNode(this.$el))return!1;this.updateElement(e,t)}),(e=>{e.__x=new Ze(e)})),this.executeAndClearRemainingShowDirectiveStack(),this.executeAndClearNextTickStack(e)}executeAndClearNextTickStack(e){e===this.$el&&this.nextTickStack.length>0&&requestAnimationFrame((()=>{for(;this.nextTickStack.length>0;)this.nextTickStack.shift()()}))}executeAndClearRemainingShowDirectiveStack(){this.showDirectiveStack.reverse().map((e=>new Promise(((t,n)=>{e(t,n)})))).reduce(((e,t)=>e.then((()=>t.then((e=>{e()}))))),Promise.resolve((()=>{}))).catch((e=>{if(e!==S)throw e})),this.showDirectiveStack=[],this.showDirectiveLastElement=void 0}updateElement(e,t){this.resolveBoundAttributes(e,!1,t)}registerListeners(e,t){y(e,this).forEach((({type:n,value:i,modifiers:r,expression:s})=>{switch(n){case"on":te(this,e,i,r,s,t);break;case"model":oe(this,e,r,s,t)}}))}resolveBoundAttributes(e,t=!1,n){let i=y(e,this);i.forEach((({type:r,value:s,modifiers:o,expression:a})=>{switch(r){case"model":K(this,e,"value",a,n,r,o);break;case"bind":if("template"===e.tagName.toLowerCase()&&"key"===s)return;K(this,e,s,a,n,r,o);break;case"text":var l=this.evaluateReturnExpression(e,a,n);J(e,l,a);break;case"html":Q(this,e,a,n);break;case"show":l=this.evaluateReturnExpression(e,a,n),X(this,e,l,o,t);break;case"if":if(i.some((e=>"for"===e.type)))return;l=this.evaluateReturnExpression(e,a,n),ee(this,e,l,t,n);break;case"for":M(this,e,a,t,n);break;case"cloak":e.removeAttribute("x-cloak")}}))}evaluateReturnExpression(e,t,i=(()=>{})){return p(e,t,this.$data,n(n({},i()),{},{$dispatch:this.getDispatchFunction(e)}))}evaluateCommandExpression(e,t,i=(()=>{})){return h(e,t,this.$data,n(n({},i()),{},{$dispatch:this.getDispatchFunction(e)}))}getDispatchFunction(e){return(t,n={})=>{e.dispatchEvent(new CustomEvent(t,{detail:n,bubbles:!0}))}}listenForNewElementsToInitialize(){const e=this.$el,t={childList:!0,attributes:!0,subtree:!0};new MutationObserver((e=>{for(let t=0;t<e.length;t++){const n=e[t].target.closest("[x-data]");if(n&&n.isSameNode(this.$el)){if("attributes"===e[t].type&&"x-data"===e[t].attributeName){const n=e[t].target.getAttribute("x-data")||"{}",i=p(this.$el,n,{$el:this.$el});Object.keys(i).forEach((e=>{this.$data[e]!==i[e]&&(this.$data[e]=i[e])}))}e[t].addedNodes.length>0&&e[t].addedNodes.forEach((e=>{1!==e.nodeType||e.__x_inserted_me||(!e.matches("[x-data]")||e.__x?this.initializeElements(e):e.__x=new Ze(e))}))}}})).observe(e,t)}getRefsProxy(){var e=this;return new Proxy({},{get(t,n){return"$isAlpineProxy"===n||(e.walkAndSkipNestedComponents(e.$el,(e=>{e.hasAttribute("x-ref")&&e.getAttribute("x-ref")===n&&(i=e)})),i);var i}})}}const We={version:"2.8.2",pauseMutationObserver:!1,magicProperties:{},onComponentInitializeds:[],onBeforeComponentInitializeds:[],ignoreFocusedForValueBinding:!1,start:async function(){s()||await i(),this.discoverComponents((e=>{this.initializeComponent(e)})),document.addEventListener("turbolinks:load",(()=>{this.discoverUninitializedComponents((e=>{this.initializeComponent(e)}))})),this.listenForNewUninitializedComponentsAtRunTime()},discoverComponents:function(e){document.querySelectorAll("[x-data]").forEach((t=>{e(t)}))},discoverUninitializedComponents:function(e,t=null){const n=(t||document).querySelectorAll("[x-data]");Array.from(n).filter((e=>void 0===e.__x)).forEach((t=>{e(t)}))},listenForNewUninitializedComponentsAtRunTime:function(){const e=document.querySelector("body"),t={childList:!0,attributes:!0,subtree:!0};new MutationObserver((e=>{if(!this.pauseMutationObserver)for(let t=0;t<e.length;t++)e[t].addedNodes.length>0&&e[t].addedNodes.forEach((e=>{1===e.nodeType&&(e.parentElement&&e.parentElement.closest("[x-data]")||this.discoverUninitializedComponents((e=>{this.initializeComponent(e)}),e.parentElement))}))})).observe(e,t)},initializeComponent:function(e){if(!e.__x)try{e.__x=new Ze(e)}catch(t){setTimeout((()=>{throw t}),0)}},clone:function(e,t){t.__x||(t.__x=new Ze(t,e))},addMagicProperty:function(e,t){this.magicProperties[e]=t},onComponentInitialized:function(e){this.onComponentInitializeds.push(e)},onBeforeComponentInitialized:function(e){this.onBeforeComponentInitializeds.push(e)}};s()||(window.Alpine=We,window.deferLoadingAlpine?window.deferLoadingAlpine((function(){window.Alpine.start()})):window.Alpine.start())}();const e=["B","kB","MB","GB","TB","PB","EB","ZB","YB"],t=["B","kiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"],n=["b","kbit","Mbit","Gbit","Tbit","Pbit","Ebit","Zbit","Ybit"],i=["b","kibit","Mibit","Gibit","Tibit","Pibit","Eibit","Zibit","Yibit"],r=(e,t,n)=>{let i=e;return"string"==typeof t||Array.isArray(t)?i=e.toLocaleString(t,n):!0!==t&&void 0===n||(i=e.toLocaleString(void 0,n)),i};[...document.querySelectorAll("[data-format='date-time']")].map((e=>{const t=e.textContent;if(Date.parse(t)){const n=Intl.DateTimeFormat("en-GB",{dateStyle:"long",timeStyle:"short"}).format(new Date(new Date(t)));e.textContent=n}})),[...document.querySelectorAll("[data-format='file-size']")].map((s=>s.textContent=((s,o)=>{if(!Number.isFinite(s))throw new TypeError(`Expected a finite number, got ${typeof s}: ${s}`);const a=(o=Object.assign({bits:!1,binary:!1},o)).bits?o.binary?i:n:o.binary?t:e;if(o.signed&&0===s)return` 0 ${a[0]}`;const l=s<0,c=l?"-":o.signed?"+":"";let u;if(l&&(s=-s),void 0!==o.minimumFractionDigits&&(u={minimumFractionDigits:o.minimumFractionDigits}),void 0!==o.maximumFractionDigits&&(u=Object.assign({maximumFractionDigits:o.maximumFractionDigits},u)),s<1)return c+r(s,o.locale,u)+" "+a[0];const d=Math.min(Math.floor(o.binary?Math.log(s)/Math.log(1024):Math.log10(s)/3),a.length-1);return s/=Math.pow(o.binary?1024:1e3,d),u||(s=s.toPrecision(3)),c+r(Number(s),o.locale,u)+" "+a[d]})(parseInt(s.textContent))));
 
-        ul { 
-          list-style: none; 
-          margin: 0;
-          padding: 0;
-        }
+</script>
+<!-- assets/style.0e311e9f.css --><style type="text/css">
+/*! tailwindcss v2.1.4 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */*,::after,::before{box-sizing:border-box}html{-moz-tab-size:4;-o-tab-size:4;tab-size:4}html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji'}hr{height:0;color:inherit}abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}::-moz-focus-inner{border-style:none;padding:0}:-moz-focusring{outline:1px dotted ButtonText}:-moz-ui-invalid{box-shadow:none}legend{padding:0}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}button{background-color:transparent;background-image:none}button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}fieldset{margin:0;padding:0}ol,ul{list-style:none;margin:0;padding:0}html{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";line-height:1.5}body{font-family:inherit;line-height:inherit}*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}hr{border-top-width:1px}img{border-style:solid}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input:-ms-input-placeholder,textarea:-ms-input-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}table{border-collapse:collapse}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}button,input,optgroup,select,textarea{padding:0;line-height:inherit;color:inherit}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}*{--tw-shadow:0 0 #0000;--tw-ring-inset:var(--tw-empty, );/*!*//*!*/--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59, 130, 246, 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:.25rem}.inline-block{display:inline-block}.inline-flex{display:inline-flex}.grid{display:grid}.min-h-screen{min-height:100vh}.min-w-full{min-width:100%}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.gap-x-4{-moz-column-gap:1rem;column-gap:1rem}.gap-y-8{row-gap:2rem}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.rounded-full{border-radius:9999px}.border-t{border-top-width:1px}.border-gray-200{--tw-border-opacity:1;border-color:rgba(229,231,235,var(--tw-border-opacity))}.bg-white{--tw-bg-opacity:1;background-color:rgba(255,255,255,var(--tw-bg-opacity))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgba(249,250,251,var(--tw-bg-opacity))}.bg-red-100{--tw-bg-opacity:1;background-color:rgba(254,226,226,var(--tw-bg-opacity))}.bg-yellow-100{--tw-bg-opacity:1;background-color:rgba(254,243,199,var(--tw-bg-opacity))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgba(219,234,254,var(--tw-bg-opacity))}.px-3{padding-left:.75rem;padding-right:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-2{padding-left:.5rem;padding-right:.5rem}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-medium{font-weight:500}.font-bold{font-weight:700}.font-semibold{font-weight:600}.leading-6{line-height:1.5rem}.leading-5{line-height:1.25rem}.text-gray-900{--tw-text-opacity:1;color:rgba(17,24,39,var(--tw-text-opacity))}.text-gray-600{--tw-text-opacity:1;color:rgba(75,85,99,var(--tw-text-opacity))}.text-red-800{--tw-text-opacity:1;color:rgba(153,27,27,var(--tw-text-opacity))}.text-yellow-800{--tw-text-opacity:1;color:rgba(146,64,14,var(--tw-text-opacity))}.text-blue-800{--tw-text-opacity:1;color:rgba(30,64,175,var(--tw-text-opacity))}.shadow{--tw-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}/*! purgecss start ignore */[x-cloak]{display:none!important}/*! purgecss end ignore */@media (min-width:640px){.sm\:col-span-3{grid-column:span 3/span 3}.sm\:mt-0{margin-top:0}.sm\:grid{display:grid}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:gap-4{gap:1rem}.sm\:rounded-lg{border-radius:.5rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}
+</style>
+</head>
+<body x-data="{ file: '', content: '' }">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+    <div class="px-3 py-4 sm:px-6">
+      <h1 class="text-lg leading-6 font-medium text-gray-900">
+        Workspace:
+        <span class="inline-block font-mono">{{ workspace }}</span>
+      </h1>
+    </div>
+    <div class="border-t border-gray-200 px-3 py-4 sm:px-6">
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-8">
+        <div>
+          <dt class="text-sm font-bold text-gray-600">Repository</dt>
+          <dd class="mt-1 text-sm text-gray-900 font-mono">{{ repo }}</dd>
+        </div>
+        <div>
+          <dt class="text-sm font-bold text-gray-600">Generated on</dt>
+          <dd class="mt-1 text-sm text-gray-900" data-format="date-time">{{ current_time }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
 
-        li {
-          padding: 0.1em;
-          cursor: pointer;
-        }
+  {% for name, action in actions.items() %}
+    {% for filename, file in action.files.items() %}
+      <div x-cloak x-show="file === '{{ filename }}'">
 
-        ul ul li {
-          margin-left: 1.6em;
-        }
-
-        #wrapper { 
-          display: grid; 
-          grid-template-columns: 1fr 3fr;
-        }
-
-        .contents {
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-        }
-
-        .contents iframe { 
-          width: 100%;
-        }
-
-        .action.highlight {
-          background: #ceced3;
-        }
-
-        .filelink.highlight {
-          font-weight: bold;
-        }
-
-        .filelink.not-exist { 
-            text-decoration: line-through;
-        }
-
-        .file, .filelist { display: none; }
-        .file.active, .filelist.active { display: block; }
-
-    </style>
-  </head>
-  <body>
-    <header class="row">
-      <h1>Workspace {{ workspace }}</h1>
-      <h2>Repository {{ repo }}</h2>
-      <h3>Generated on {{ current_time }}</h3>
-    </header>
-
-    <div id="wrapper">
-      <ul id="navigation column">
-        {% for name, action in actions.items() %}
-        <li>
-          <div data-show="{{ name }}-filelist" data-highlight=".action" class="action">
-            <span class="state {{ action.state }}">{{ "✅" if action.state == "succeeded" else "❌" }}</span>
-            <span class="action">{{ name }}</span>
-            <span class="count">({{ action.files|length }})</span>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+          <div class="border-t border-gray-200">
+            <dl>
+              <div class="bg-white px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Name</dt>
+                <dd class="mt-1 text-sm text-gray-900 font-mono whitespace-nowrap overflow-y-auto sm:mt-0 sm:col-span-3">
+                  {{ filename }}
+                </dd>
+              </div>
+              <div class="bg-gray-50 px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Size</dt>
+                <dd class="mt-1 text-sm text-gray-900 overflow-y-auto sm:mt-0 sm:col-span-3" data-format="file-size">
+                  {{ file.filesize }}
+                </dd>
+              </div>
+              <div class="bg-white px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Privacy</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-3">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                    {% if file.privacy_level == 'highly_sensitive' %}
+                      bg-red-100 text-red-800
+                    {% elif file.privacy_level == 'moderately_sensitive' %}
+                      bg-yellow-100 text-yellow-800
+                    {% else %}
+                      bg-blue-100 text-blue-800
+                    {% endif %}
+                  ">
+                    {{ file.privacy_level }}
+                  </span>
+                </dd>
+              </div>
+              <div class="bg-gray-50 px-3 py-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-bold text-gray-600">Action</dt>
+                <dd class="mt-1 text-sm text-gray-900 font-mono whitespace-nowrap overflow-y-auto sm:mt-0 sm:col-span-3">
+                  {{ name }}
+                </dd>
+              </div>
+            </dl>
           </div>
-          <ul id="{{ name }}-filelist" class="filelist">
-            {% for filename, file in action['files'].items() %}
-            <li data-show="{{ filename }}" data-hide=".file" data-highlight=".filelink" class="filelink {{file.privacy_level}} {{ '' if file.exists else 'not-exist' }}">{{ filename }}</li>
-            {% endfor %}
-          </ul>
-        </li>
+        </div>
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+          <div class="px-3 py-4 sm:px-6 min-w-full overflow-x-auto">
+            <section id="{{ filename }}" class="{{ file.type }} file {{ '' if file.exists else 'not-exist' }}">
+            {% if file.exists %}
+              {% if file.html %}
+                {% if file.truncated %}
+                  <p>This CSV is very large, and this preview has been truncated.</p>
+                {% endif %}
+                <div data-load="{{ file.html }}"/>
+              {% elif file.type in ("jpeg", "png", "svg") %}
+                <img src="{{ filename }}"/>
+              {% elif file.type in ("html", "log", "txt") %}
+                <iframe class="min-w-full min-h-screen" width="100%" src="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
+              {% else %}
+                <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
+              {% endif %}
+            {% else %}
+              <p>This file is not present</p>
+            {% endif %}
+          </section>
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+  {% endfor %}
+
+  <ul id="navigation column">
+    {% for name, action in actions.items() %}
+    <li>
+      <div data-show="{{ name }}-filelist" data-highlight=".action" class="action">
+        <span class="state {{ action.state }}">{{ "✅" if action.state == "succeeded" else "❌" }}</span>
+        <span class="action">{{ name }}</span>
+        <span class="count">({{ action.files|length }})</span>
+      </div>
+      <ul id="{{ name }}-filelist" class="filelist">
+        {% for filename, file in action['files'].items() %}
+          <li>
+            <button @click="
+              file = '{{ filename }}';
+
+            ">
+              {{ filename }}
+            </button>
+          </li>
         {% endfor %}
       </ul>
+    </li>
+    {% endfor %}
+  </ul>
 
-      <div class="column content">
-        {% for name, action in actions.items() %}
-        {% for filename, file in action.files.items() %}
-        <section id="{{ filename }}" class="{{ file.type }} file {{ '' if file.exists else 'not-exist' }}">
-          <div class="summary">
-            <table>
-              <tr><th>Name</th><td>{{ filename }}</td></tr>
-              <tr><th>Size</th><td>{{ file.filesize }}</td></tr>
-              <tr><th>Privacy</th><td>{{ file.privacy_level }}</td></tr>
-              <tr><th>Action</th><td>{{ name }}</td></tr>
-            </table>
-          </div>
-          <div class="contents">
-            {% if file.exists %}
-                {% if file.html %}
-                    {% if file.truncated %}
-                    <p>This CSV is very large, and this preview has been truncated.</p>
-                    {% endif %}
-                <div data-load="{{ file.html }}"/>
-                {% elif file.type in ("jpeg", "png", "svg") %}
-                <img data-load="{{ filename }}"/>
-                {% elif file.type in ("log", "txt") %}
-                <pre data-load="{{ filename }}"/>
-                {% elif file.type in ("html") %}
-                <iframe data-load="{{ filename }}" sandbox="allow-same-origin allow-scripts"></iframe>
-                {% else %}
-                <p>We cannot display this file type, but you can download it: <a href="{{ filename }}">{{ filename }}</a></p>
-                {% endif %}
-            {% else %}
-            <p>This file is not present</p>
-            {% endif %}
-          </div>
-        </section>
-        {% endfor %}
-        {% endfor %}
-      </div>
+  
+</body>
 
-    </div>
-    <script type="text/javascript">
-      // stupid simple show/hide links
-      for (const trigger of document.querySelectorAll("[data-show]")) {
-        const to_show = document.getElementById(trigger.dataset.show);
-        const to_hide = Array.from(document.querySelectorAll(trigger.dataset.hide));
-        const to_unlight = Array.from(document.querySelectorAll(trigger.dataset.highlight));
-        const to_load = Array.from(to_show.querySelectorAll("[data-load]"));
-
-        trigger.onclick = (e) => {     
-          to_load.forEach(l => load(l))
-
-          if (to_hide.length > 0) {
-            // hide all others, then show current
-            to_hide.forEach(h => h.classList.remove("active"));
-            to_show.classList.add('active');
-          } else {
-            // just show it, don't hide anything else
-            to_show.classList.toggle('active');
-          }
-          if (to_unlight.length > 0) {
-            to_unlight.forEach(u => u.classList.remove("highlight"));
-          }
-          trigger.classList.add("highlight");
-          e.stopPropagation();
-        }
-      }
-
-      function load(elem) {
-        if (elem.dataset.loaded) return;
-
-        if (elem.src !== undefined) {
-          // <img> or <iframe>
-          elem.src = elem.dataset.load;
-          return
-        }
-
-        // text, log, or html
-        fetch(elem.dataset.load, {mode: "no-cors"})
-          .then(response => response.text())
-          .then(text => {
-            elem.innerHTML = text;
-            elem.dataset.loaded = true;
-          });
-      }
-
-      Array.from(document.querySelectorAll("iframe")).forEach(iframe => {
-        iframe.onload = function() {
-          console.log(iframe.contentDocument.body.scrollHeight);
-          console.log(iframe.contentDocument.body.scrollWidth);
-          iframe.style.height = iframe.contentDocument.body.scrollHeight + "px";
-          iframe.style.width = iframe.contentDocument.body.scrollWidth + "px";
-        };
-      })
-
-    </script>
-  </body>
 </html>
